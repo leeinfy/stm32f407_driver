@@ -58,10 +58,15 @@
 /* peripheral on AHB2 bus*/
 #define RNG_BASE_ADDR				0x50060800UL
 #define DCMI_BASE_ADDR				0x50050000UL
+
 #define USB_OTG_FS_BASE_ADDR		0x50000000UL
 
 /* peripheral on AHB3 bus*/
-
+#define FSMC_CR_BASE_ADDR			0xA0000000UL
+#define FSMC_B4_BASE_ADDR			0x90000000UL
+#define FSMC_B3_BASE_ADDR			0x80000000UL
+#define FSMC_B2_BASE_ADDR			0x70000000UL
+#define FSMC_B1_BASE_ADDR			0x60000000UL
 
 /* peripheral on APB1 bus*/
 #define TIM11_BASE_ADDR			0x40014800UL
@@ -169,7 +174,7 @@ typedef struct{
 #define GPIOH		((GPIOx_RegDef_t*) GPIOH_BASE_ADDR)
 #define GPIOI		((GPIOx_RegDef_t*) GPIOI_BASE_ADDR)
 
-/***** EXTI Peripheral****/
+/***** EXTI Peripheral ****/
 typedef struct{
 	volatile uint32_t IMR;			//interrupt mask 			offset 0x00
 	volatile uint32_t EMR;			//event mask				offset 0x04
@@ -181,7 +186,7 @@ typedef struct{
 
 #define EXTI 		((EXTI_RegDef_t*) EXTI_BASE_ADDR)
 
-/****** system configuration controller***********/
+/****** system configuration controller ***********/
 typedef struct{
 	volatile uint32_t MEMRMP;		//memory remap						offset 0x00
 	volatile uint32_t PMC;		  	//peripheral mode configuration		offset 0x04
@@ -190,5 +195,34 @@ typedef struct{
 }SYSCFG_RegDef_t;
 
 #define SYSCFG		((SYSCFG_RegDef_t*) SYSCFG_BASE_ADDR)
+
+/****** SPI / I2S Peripheral ********/
+typedef struct{
+	volatile uint32_t CR[2];					//control register			offset 0x00,0x04
+	volatile uint32_t SR;					//status register			offset 0x08
+	volatile uint32_t DR;					//data register				offset 0x0C
+	volatile uint32_t CRCPR;					//CRC polynomial register 	offset 0x10
+	volatile uint32_t RXCRCR;				//RX CRC					offset 0x14
+	volatile uint32_t TXCRCR;				//TX CRC					offset 0x18
+	volatile uint32_t I2SCFGR;				//I2S configuration			offset 0x1C
+	volatile uint32_t I2SPR;					//I2S prescaler				offset 0x20
+}SPI_RegDef_t;
+
+#define SPI1		((SPI_RegDef_t*) SPI1_BASE_ADDR)
+#define SPI2		((SPI_RegDef_t*) SPI2_BASE_ADDR)
+#define SPI3		((SPI_RegDef_t*) SPI3_BASE_ADDR)
+
+typedef struct{
+	volatile uint32_t RESERVE;				//							offset 0x00
+	volatile uint32_t CR2;					//control register 2		offset 0x04
+	volatile uint32_t SR;					//status register			offset 0x08
+	volatile uint32_t DR;					//data register				offset 0x0C
+	volatile uint32_t RESERVE2[3];			//					        offset 0x10, 0x14, 0x18
+	volatile uint32_t I2SCFGR;				//I2S configuration			offset 0x1C
+	volatile uint32_t I2SPR;					//I2S prescaler				offset 0x20
+}I2S_RegDef_t;
+
+#define I2S2		((I2S_RegDef_t*) I2S2_BASE_ADDR)
+#define I2S3		((I2S_RegDef_t*) I2S3_BASE_ADDR)
 
 #endif /* DRIVERS_INC_STM32F407_H_ */

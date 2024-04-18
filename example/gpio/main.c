@@ -18,30 +18,19 @@
 
 #include <stdint.h>
 #include "gpio.h"
+#include "spi.h"
 
 void delay(void){
 	for(uint32_t i=0; i<500000; i++);
 }
 
-gpio_dev_t led_dev;
-gpio_port_config_t led_config;
+gpio_dev_t led_dev = GPIO_INSTANCE(D, 12);
+gpio_port_config_t led_config = DK_LED_GPIO_CONFIG();
 
-gpio_dev_t button_dev;
-gpio_port_config_t button_config;
+gpio_dev_t button_dev = GPIO_INSTANCE(A, 0);
+gpio_port_config_t button_config = DK_BUTTON_GPIO_CONFIG();
 
 int main(void){
-
-	led_dev.gpio_peri = GPIOD;
-	led_dev.pin = 12;
-	led_config.mode = GPIO_MODE_GP_OUTPUT;
-	led_config.output_type = GPIO_OUTPUT_PUSH_PULL;
-	led_config.pull_up_down = GPIO_NO_PUPD;
-
-	button_dev.gpio_peri = GPIOA;
-	button_dev.pin = 0;
-	button_config.mode = GPIO_MODE_IR_FE;
-	button_config.pull_up_down = GPIO_NO_PUPD;
-
 	GPIO_PeriClockControl(led_dev.gpio_peri, 1);
 	GPIO_Init(&led_dev, &led_config);
 

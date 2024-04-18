@@ -11,7 +11,6 @@
 #include "stm32f407.h"
 #include "syscfg.h"
 #include "irq.h"
-#include <stdint.h>
 
 //GPIO Peripheral clock enable
 #define GPIOx_PERI_CLK_EN(index)		(RCC->AHB1ENR |= (1 << index))
@@ -24,6 +23,17 @@
 
 //GPIO IRQNumber base on target port
 #define GPIO_port_IRQNumber(x)		IRQ_NUM_EXTI##x
+
+//Default template of GPIO dev instance
+#define GPIO_INSTANCE(dev, port) (gpio_dev_t){.gpio_peri = GPIO##dev, .pin = port}
+
+//stm32f407 DK on board LED config
+#define DK_LED_GPIO_CONFIG()	(gpio_port_config_t){.mode = GPIO_MODE_GP_OUTPUT, \
+													 .output_type = GPIO_OUTPUT_PUSH_PULL, \
+													 .pull_up_down = GPIO_NO_PUPD}
+
+//stm32f407 DK on board button config
+#define DK_BUTTON_GPIO_CONFIG()	(gpio_port_config_t){.mode = GPIO_MODE_IR_FE, .pull_up_down = GPIO_NO_PUPD}
 
 //gpio mode
 #define GPIO_MODE_INPUT				0x00U

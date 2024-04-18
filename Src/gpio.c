@@ -11,8 +11,8 @@ static uint8_t get_gpio_index(GPIOx_RegDef_t* pGPIOx);
 /* @fn 		GPIO_PeriClockControl
  * @brief	enable or disable peripheral clock for given GPIO peripheral
  * */
-void GPIO_PeriClockControl(GPIOx_RegDef_t* pGPIOx, uint8_t enable){
-	uint8_t index = get_gpio_index(pGPIOx);
+void GPIO_PeriClockControl(GPIOx_RegDef_t* GPIOx, uint8_t enable){
+	uint8_t index = get_gpio_index(GPIOx);
 	if(enable){
 		GPIOx_PERI_CLK_EN(index);
 	}else{
@@ -147,19 +147,19 @@ void GPIO_toggle_Port_Output(gpio_dev_t* gpio_dev){
 
 /* @fn 		get_gpio_index
  * @brief	get the gpio index base on address
- * @param	pGPIOx, base address of the GPIO peripheral
+ * @param	GPIOx, base address of the GPIO peripheral
  * @return 	index of target gpio peripheral
  * */
-uint8_t get_gpio_index(GPIOx_RegDef_t* pGPIOx){
-	if (pGPIOx == GPIOA) return 0;
-	else if(pGPIOx == GPIOB) return 1;
-	else if(pGPIOx == GPIOC) return 2;
-	else if(pGPIOx == GPIOD) return 3;
-	else if(pGPIOx == GPIOE) return 4;
-	else if(pGPIOx == GPIOF) return 5;
-	else if(pGPIOx == GPIOG) return 6;
-	else if(pGPIOx == GPIOH) return 7;
-	else if(pGPIOx == GPIOI) return 8;
+uint8_t get_gpio_index(GPIOx_RegDef_t* GPIOx){
+	if (GPIOx == GPIOA) return 0;
+	else if(GPIOx == GPIOB) return 1;
+	else if(GPIOx == GPIOC) return 2;
+	else if(GPIOx == GPIOD) return 3;
+	else if(GPIOx == GPIOE) return 4;
+	else if(GPIOx == GPIOF) return 5;
+	else if(GPIOx == GPIOG) return 6;
+	else if(GPIOx == GPIOH) return 7;
+	else if(GPIOx == GPIOI) return 8;
 	else return 0;
 }
 
