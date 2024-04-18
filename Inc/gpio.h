@@ -22,6 +22,9 @@
 //GPIO Peripheral Reset
 #define GPIOx_RESET(index)		do{RCC->AHB1RSTR |= (1 << index); RCC->AHB1RSTR &= ~(1 << index);}while(0)
 
+//GPIO IRQNumber base on target port
+#define GPIO_port_IRQNumber(x)		IRQ_NUM_EXTI##x
+
 //gpio mode
 #define GPIO_MODE_INPUT				0x00U
 #define GPIO_MODE_GP_OUTPUT			0x01U

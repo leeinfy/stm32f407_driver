@@ -136,7 +136,6 @@ void GPIO_Update_Port_Output(gpio_dev_t* gpio_dev, uint8_t value){
 
 /* @fn 		GPIO_toggle_Port_Output
  * @brief	toggle value on a gpio device, use atomic approach
-
  * */
 void GPIO_toggle_Port_Output(gpio_dev_t* gpio_dev){
 	GPIOx_RegDef_t* pGPIOx = gpio_dev -> gpio_peri;
@@ -170,8 +169,8 @@ uint8_t get_gpio_index(GPIOx_RegDef_t* pGPIOx){
  * @param	pinNumber, the pin of GPIO IRQ
  * */
 void GPIO_IRQHandler(uint8_t PinNumber){
-	//clear the EXTI pr register
+	//clear the EXTI pending register
 	if(EXTI->PR & (1 << PinNumber)){
-		EXTI->PR |= (1<<PinNumber);
+		EXTI->PR |= (1 << PinNumber);
 	}
 }

@@ -23,17 +23,20 @@ void delay(void){
 	for(uint32_t i=0; i<500000; i++);
 }
 
+gpio_dev_t led_dev;
+gpio_port_config_t led_config;
+
+gpio_dev_t button_dev;
+gpio_port_config_t button_config;
+
 int main(void){
-	gpio_dev_t led_dev;
-	gpio_port_config_t led_config;
+
 	led_dev.gpio_peri = GPIOD;
 	led_dev.pin = 12;
 	led_config.mode = GPIO_MODE_GP_OUTPUT;
 	led_config.output_type = GPIO_OUTPUT_PUSH_PULL;
 	led_config.pull_up_down = GPIO_NO_PUPD;
 
-	gpio_dev_t button_dev;
-	gpio_port_config_t button_config;
 	button_dev.gpio_peri = GPIOA;
 	button_dev.pin = 0;
 	button_config.mode = GPIO_MODE_IR_FE;
@@ -44,19 +47,19 @@ int main(void){
 
 	GPIO_PeriClockControl(button_dev.gpio_peri, 1);
 	GPIO_Init(&button_dev, &button_config);
-//
-//	IRQConfig(IRQ_NUM_EXTI0, 1);
-//	IRQ_Priority_Config(IRQ_NUM_EXTI0, 15);
+
+	IRQConfig(GPIO_port_IRQNumber(0), 1);
+	IRQ_Priority_Config(GPIO_port_IRQNumber(0), 15);
 
 	while(1){
-		if(GPIO_Get_Port_Input(&button_dev) == 1)
-			GPIO_toggle_Port_Output(&led_dev);
-		delay();
+//		if(GPIO_Get_Port_Input(&button_dev) == 1)
+//			GPIO_toggle_Port_Output(&led_dev);
+//		delay();
 	}
 }
 
 //overwrite the IRQHandler of EXIT0 in startup file
-//void EXTI0_IRQHandler(void){
-//	GPIO_IRQHandler(0);
-//	GPIO_toggle_Port_Output(GPIOD, 12);
-//}
+void EXTI0_IRQHandler(void){
+	GPIO_IRQHandler(0);
+	GPIO_toggle_Port_Output(&led_dev);
+}
